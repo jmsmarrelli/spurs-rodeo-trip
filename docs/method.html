@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method notes</title>
+<meta name="description" content="The detection rule in full, the specification choices, the two places the obvious approach is wrong, and where this is thin.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --surface:#fcfcfb; --raised:#f4f3ef; --ink:#0b0b0b; --ink-2:#43423f; --ink-3:#7d7b74;
+  --rule:#e3e2dc; --accent:#1c5cab; --mark:#eb6834;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --surface:#14140f; --raised:#1e1e18; --ink:#f2f1ec; --ink-2:#c9c7bf; --ink-3:#8d8b83;
+    --rule:#2e2e27; --accent:#7fb0f0; --mark:#f2895a;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--surface); color:var(--ink);
+  font:400 17px/1.62 "Source Sans 3","Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-feature-settings:"kern" 1;
+}
+.wrap{max-width:1020px;margin:0 auto;padding:0 22px}
+.bar{border-bottom:1px solid var(--rule);background:var(--surface)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;padding-top:16px;padding-bottom:15px}
+.bar .slug{
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12.5px;letter-spacing:.02em;color:var(--ink-2)
+}
+.bar nav{margin-left:auto;display:flex;gap:18px}
+.bar a{
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12.5px;color:var(--ink-3);text-decoration:none;border-bottom:1px solid transparent
+}
+.bar a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+main{padding:0 0 96px}
+.col{max-width:700px}
+h1{
+  font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:clamp(30px,5.4vw,46px);line-height:1.08;
+  letter-spacing:-.022em;margin:54px 0 20px;max-width:640px
+}
+h2{
+  font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:600;font-size:22px;line-height:1.24;letter-spacing:-.012em;
+  margin:52px 0 14px;max-width:700px
+}
+h3{font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:600;
+  font-size:18.5px;letter-spacing:-.008em;margin:40px 0 8px}
+p.meta{font-size:14.5px;color:var(--ink-3);margin:-2px 0 16px}
+p.meta a{border-bottom-color:transparent}
+p.meta a:hover{border-bottom-color:currentColor}
+p{margin:0 0 18px;max-width:700px}
+p strong{font-weight:600}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(28,92,171,.32)}
+a:hover{border-bottom-color:currentColor}
+hr{border:0;border-top:1px solid var(--rule);margin:46px 0}
+ul,ol{margin:0 0 18px;padding-left:22px;max-width:700px}
+li{margin:0 0 8px}
+li>p{margin:0 0 8px}
+code{
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.86em;background:var(--raised);padding:.12em .34em;border-radius:3px
+}
+pre{
+  background:var(--raised);border:1px solid var(--rule);border-radius:5px;
+  padding:15px 17px;overflow-x:auto;margin:0 0 22px;max-width:820px
+}
+pre code{background:none;padding:0;font-size:13px;line-height:1.55}
+em{color:var(--ink-2)}
+.tw{overflow-x:auto;margin:0 0 26px;max-width:980px}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:7px 15px 7px 0;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  font-size:11.5px;text-transform:uppercase;letter-spacing:.055em;
+  color:var(--ink-3);font-weight:500;border-bottom-color:var(--ink-3);white-space:normal
+}
+td.num{text-align:right;font-variant-numeric:tabular-nums;padding-right:22px}
+th.num{text-align:right;padding-right:22px}
+tbody tr:last-child td{border-bottom:0}
+figure{margin:30px 0 34px;max-width:980px}
+figure img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:4px}
+.foot{border-top:1px solid var(--rule);padding:22px 0 40px}
+.foot .wrap{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:8px 20px
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  h1{margin-top:36px}
+  th,td{padding-right:14px}
+}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap"><span class="slug">spurs-rodeo-trip</span><nav><a href="../index.html">findings</a><a href="https://github.com/jmsmarrelli/spurs-rodeo-trip">repository</a><a href="https://jmsmarrelli.github.io/basketball-analytics/">all projects</a></nav></div></header>
+<main><div class="wrap">
+<h1>Method notes</h1>
+<p>The detection rule in full, the specification choices, the two places the
+obvious approach is wrong, and where this is thin.</p>
+<h2>Detecting the trip</h2>
+<p>Nothing in the schedule file says "rodeo road trip", and no list of rodeo dates
+is read in. For each team-season the rule is:</p>
+<ol>
+<li>Split the season into maximal runs of consecutive road games.</li>
+<li>Keep the runs whose <strong>first</strong> game falls between 20 January and 20 March.</li>
+<li>Take the longest of those. Ties go to the earlier one.</li>
+<li>Discard it if it is shorter than four games.</li>
+</ol>
+<p>Anchoring on the first game rather than on any overlap matters for the handful
+of runs that straddle the window edge: a road trip that begins on 14 January and
+runs into February is a January trip that happens to be long, not a February
+one, and including it would let the schedule maker's January decisions into a
+February question.</p>
+<p>The rule is applied identically to all thirty-two franchise codes. For San
+Antonio it returns the rodeo trip in all twenty seasons. For everyone else it
+returns whatever their schedule happened to hand them, which is the comparison
+group in <code>output/team_trips.csv</code> and figure 02.</p>
+<p><strong>External check.</strong> Three of the twenty were checked against contemporaneous
+reporting rather than against the data that produced them. The detector puts the
+2016-17 trip's first game on 6 February 2017, which is the day local coverage
+described the team as kicking off the fifteenth annual trek; it ends the 2018-19
+trip on 25 February 2019, and the league's own write-up of the team regrouping
+after the rodeo road trip is dated the 26th; and the eight opponents a
+season-preview piece listed for 2022-23 are eight of the nine games the detector
+found. It is the right event.</p>
+<p><strong>The fifteenth in 2017 also dates the tradition.</strong> Counting back puts the first
+one in February 2003, the season the arena opened, which is why this project
+starts at 2003-04 and treats the whole sample as having the trip in it.</p>
+<h2>Is the window doing the work?</h2>
+<p>I picked 20 January to 20 March before looking at a single result, on the
+grounds that it brackets the rodeo without being so wide that it starts
+collecting other teams' western swings. The window, the length floor and the
+control set are all choices, though, so <code>sensitivity()</code> refits the entire
+analysis under seven combinations and writes <code>output/sensitivity.csv</code>:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Window</th>
+<th>Min</th>
+<th>Controls</th>
+<th>SA seasons</th>
+<th>SA mean length</th>
+<th>Trip coefficient</th>
+<th>Slate gap</th>
+<th>SA vs. expectation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20 Jan – 20 Mar</td>
+<td class="num">4</td>
+<td>all</td>
+<td class="num">20</td>
+<td class="num">8.00</td>
+<td>+0.16 (0.30)</td>
+<td class="num">+0.61</td>
+<td class="num">−0.71</td>
+</tr>
+<tr>
+<td>20 Jan – 20 Mar</td>
+<td class="num">5</td>
+<td>all</td>
+<td class="num">20</td>
+<td class="num">8.00</td>
+<td>+0.18 (0.36)</td>
+<td class="num">+0.64</td>
+<td class="num">−0.71</td>
+</tr>
+<tr>
+<td>20 Jan – 20 Mar</td>
+<td class="num">6</td>
+<td>all</td>
+<td class="num">19</td>
+<td class="num">8.16</td>
+<td>+0.11 (0.44)</td>
+<td class="num">+0.83</td>
+<td class="num">−0.69</td>
+</tr>
+<tr>
+<td>15 Jan – 31 Mar</td>
+<td class="num">4</td>
+<td>all</td>
+<td class="num">20</td>
+<td class="num">8.00</td>
+<td>+0.06 (0.28)</td>
+<td class="num">+0.64</td>
+<td class="num">−0.75</td>
+</tr>
+<tr>
+<td>1 Feb – 10 Mar</td>
+<td class="num">4</td>
+<td>all</td>
+<td class="num">16</td>
+<td class="num">7.94</td>
+<td>+0.02 (0.34)</td>
+<td class="num">+0.30</td>
+<td class="num">−0.84</td>
+</tr>
+<tr>
+<td>1 Jan – 15 Apr</td>
+<td class="num">4</td>
+<td>all</td>
+<td class="num">20</td>
+<td class="num">8.00</td>
+<td>+0.05 (0.27)</td>
+<td class="num">+0.72</td>
+<td class="num">−0.60</td>
+</tr>
+<tr>
+<td>20 Jan – 20 Mar</td>
+<td class="num">4</td>
+<td>less Nth road game</td>
+<td class="num">20</td>
+<td class="num">8.00</td>
+<td>+0.30 (0.28)</td>
+<td class="num">+0.33</td>
+<td class="num">−0.45</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two further rows vary the after-trip window rather than the trip itself; they are
+in the same file and discussed under "The trip enters on one side only" below.</p>
+<p>Three things fall out of that table that the README does not stop to say.</p>
+<p><strong>The window is not what makes the trip unique.</strong> Widening it to the entire
+January-to-April stretch changes San Antonio's mean trip length by nothing at
+all — still 8.00 games, still twenty seasons. The rodeo trip is not merely their
+longest February road run, it is their longest road run of the whole second half
+of the season, every year for twenty years. No definition finds them a longer
+one.</p>
+<p><strong>Neither number is fragile.</strong> The trip coefficient sits between +0.02 and +0.30
+under every definition, against standard errors of 0.27 to 0.44. San Antonio's
+own deviation sits between −0.45 and −0.84, against a 95% interval that is about
+four points wide in every specification. The nulls are not artifacts of where the
+window was drawn.</p>
+<p><strong>The slate gap is the sensitive one.</strong> It ranges from +0.30 to +0.83, and the
+bottom row is why. The Nth-straight-road-game control carries +0.10 per game,
+so a model with it in expects more of a team eight games into a trip than one
+without it, and the trip games sit at a mean depth of 4.6 road games against 1.7
+for the rest of the road schedule. Drop that control and the gap halves.</p>
+<p>The last row is worth keeping in view for another reason: the sibling schedule
+project fits the same Nth-road-game term, gets the same slightly positive sign,
+and says explicitly that it does not believe it. Anything downstream of it
+inherits that doubt. What survives the doubt is the direction — the trip slate
+is easier either way — and both nulls.</p>
+<p>Two rows miss seasons. Requiring six games drops 2017-18, whose trip was six
+games long but is caught by the four- and five-game floors — a boundary case, not
+a finding. The narrow 1 February – 10 March window drops five rodeo trips: the
+four that started in late January (2005, 2006, 2007 and 2008) and the compressed
+2020-21 one, which ran in March. That row's 16 seasons are therefore 15 rodeo
+trips plus one shorter run the detector picked up instead, which is why its
+mean length and slate gap are the odd ones out.</p>
+<h2>The trip enters on one side only</h2>
+<p>Every other schedule term in this model is differenced — home value minus away
+value — which imposes that a burden costs whoever carries it the same amount.
+A road trip cannot be differenced that way, because the home team is never on
+one. So <code>d_trip</code> is minus the away team's indicator, and the coefficient reads
+as the effect on the away team's own net rating.</p>
+<p>The after-trip term <em>is</em> differenced, because two teams can both be in that state
+in the same game, and occasionally are. "First games back" is the next N games in
+date order, whatever venue they are played at — 72% of them are at home, and
+nothing in the definition requires it — with N matching the length of the trip
+that preceded it: eight games away, eight games watched afterwards.</p>
+<p>That definition matters more than any other choice in this project, and it is the
+soft spot in the results. <code>output/sensitivity.csv</code> carries the alternatives: a
+fixed three-game window gives −0.55 (se 0.36), a fixed five-game window −0.19
+(se 0.29), and matching the trip's own length −0.13 (se 0.28). Across all nine
+specifications the term ranges from −0.55 to +0.54. None reaches significance and
+the spread is wider than any single estimate, which is the honest summary: on
+twenty trips this data cannot separate a hangover of half a point per 100 from
+nothing. The README says the hangover is not there; it should be read as saying
+that nothing here can find one.</p>
+<h2>Why the win-rate comparison is the wrong one, twice</h2>
+<p>The folklore compares trip games to other road games. That comparison is wrong
+in two independent ways, and they are worth separating because only one of them
+is about the schedule.</p>
+<p><strong>The slates are different.</strong> The model's fitted value for a game is what it
+expects of <em>that</em> Spurs team in that situation — its own team-season effect is in
+there, along with the opponent's, the venue, the rest and the travel. Averaged
+over the trip games it is +2.46 per 100; over the other road games, +1.84. Since
+the Spurs term is common to both, the 0.6 between them is entirely opponent and
+schedule.</p>
+<p>About a third of it is the opponents: 50% of trip opponents are
+eastern-conference teams against 33% of other road opponents, because a two-week
+block has to be assembled out of whoever is at home and a Texas team's eastern
+swing is the natural shape for one. Most of the rest is the Nth-straight-road-game
+term, which the trip games sit deep in (mean 4.6 against 1.7) and which carries a
+small positive coefficient the sibling project explicitly disbelieves. Dropping
+that control halves the gap to 0.33 and leaves every conclusion where it was.</p>
+<p><strong>The margins are identical and the wins are not.</strong> San Antonio's actual net
+rating is +1.74 on the trip and +1.76 elsewhere on the road. The 4.5-point win
+gap is therefore entirely a close-game record: 58.5% in games decided by five or
+fewer on the trip, 47.2% off it, on 41 and 178 games respectively. Nothing in
+this project claims that is skill, and nothing in it could.</p>
+<p><strong>The expectation excludes the trip terms.</strong> This is the circularity trap and it
+is easy to fall into. If the fitted value used to define "expected" includes
+<code>d_trip</code>, then the residual has already had the league-wide trip effect
+subtracted, and "San Antonio against expectation" silently becomes "San Antonio
+against other teams on trips" — a different and much less interesting question.
+So <code>run_02_trips.py</code> drops both trip columns from the fitted value before taking
+residuals. <code>output/expectation_check.csv</code> reports it both ways: −0.89 circular,
+−0.71 not. The difference is small and the point is not its size — it is that
+only one of the two numbers means what the sentence around it says.</p>
+<h2>What the bootstrap does and does not cover</h2>
+<p><code>bootstrap_mean</code> resamples the 160 trip games with replacement, 5,000 times. It
+prices the sampling variation in <em>those games' outcomes</em>. It does not price the
+uncertainty in the fitted values themselves, which come from a model estimated
+on all 23,838 games and are treated here as known.</p>
+<p>That understates the interval by a little. It does not matter for what the
+interval is used for, which is to say the effect is not distinguishable from
+zero; a slightly wider interval is still not distinguishable from zero.</p>
+<h2>Cross-check against the sibling project</h2>
+<p>The schedule controls here are fit on a different sample from the one in
+<code>nba-schedule-tax</code> — this project drops the bubble games and adds two trip
+terms — and they land in the same place:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Here</th>
+<th>Sibling project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Back-to-back</td>
+<td class="num">−1.52</td>
+<td class="num">−1.52</td>
+</tr>
+<tr>
+<td>Playing at altitude</td>
+<td class="num">−2.13</td>
+<td class="num">−2.12</td>
+</tr>
+<tr>
+<td>Games in the past week</td>
+<td class="num">−0.37</td>
+<td class="num">−0.38</td>
+</tr>
+<tr>
+<td>Time zones crossed</td>
+<td class="num">−0.32</td>
+<td class="num">−0.32</td>
+</tr>
+</tbody>
+</table></div>
+<p>That is the check that the trip term is being read off a model that works,
+rather than off one that happens to have been tuned until the trip term behaved.</p>
+<h2>Where this is thin</h2>
+<p><strong>No injury or rest data, and this is the Spurs.</strong> The team most famous in the
+league for sitting healthy starters is the team being studied, over the two
+decades in which they did it. If the rodeo trip was systematically used to rest
+players — or systematically not, because it was the trip that mattered — that is
+inside the estimate. The null is "nothing after everything the schedule can
+see", and a coach's roster decisions are not something the schedule can see.</p>
+<p><strong>The All-Star break is inside seventeen of the twenty trips.</strong> Seventeen
+contain an internal gap of five days or more; the model has no term for it. A
+trip interrupted by a week off is not the same object as one that is not, and
+with twenty of them there is no way to separate the two.</p>
+<p><strong>Twenty trips is twenty observations.</strong> The game-level estimates use 160 games,
+but games inside one trip are not independent of each other, and the effective
+sample for anything about <em>trips</em> rather than about <em>games on trips</em> is closer to
+twenty. Figure 04 is drawn with that in mind: it is a display of variation, not
+a set of twenty estimates.</p>
+<p><strong>Possessions are estimated</strong> from the box score with FGA + 0.44×FTA − OREB +
+TOV, averaged across the two teams. Fine at the level of a whole game, not fine
+below it, and never used below it here.</p>
+<p><strong>Regular season only, through 2022-23</strong>, which is where the public mirror this
+reads currently ends.</p>
+</div></main>
+<footer class="foot"><div class="wrap"><span>spurs-rodeo-trip</span><span>figures and tables regenerated by the pipeline in this repository</span></div></footer>
+</body>
+</html>

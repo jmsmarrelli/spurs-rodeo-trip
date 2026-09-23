@@ -1,0 +1,4 @@
+split,games,win_pct,actual_net,expected_net,adj_net,lo,hi,p
+On the rodeo trip,160,0.5812,1.7448,2.4583,-0.7136,-2.6534,1.3093,0.4768
+Other road games,636,0.5362,1.7623,1.8436,-0.0813,-1.0473,0.8929,0.8768
+Home games,794,0.738,7.8163,7.5998,0.2165,-0.6512,1.0584,0.6184

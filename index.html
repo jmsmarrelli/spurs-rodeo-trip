@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Rodeo Road Trip</title>
+<meta name="description" content="Every February the stock show and rodeo takes over the arena in San Antonio and the Spurs leave town for two and a half weeks. It has happened every season since 2003. The Clippers">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --surface:#fcfcfb; --raised:#f4f3ef; --ink:#0b0b0b; --ink-2:#43423f; --ink-3:#7d7b74;
+  --rule:#e3e2dc; --accent:#1c5cab; --mark:#eb6834;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --surface:#14140f; --raised:#1e1e18; --ink:#f2f1ec; --ink-2:#c9c7bf; --ink-3:#8d8b83;
+    --rule:#2e2e27; --accent:#7fb0f0; --mark:#f2895a;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--surface); color:var(--ink);
+  font:400 17px/1.62 "Source Sans 3","Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-feature-settings:"kern" 1;
+}
+.wrap{max-width:1020px;margin:0 auto;padding:0 22px}
+.bar{border-bottom:1px solid var(--rule);background:var(--surface)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;padding-top:16px;padding-bottom:15px}
+.bar .slug{
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12.5px;letter-spacing:.02em;color:var(--ink-2)
+}
+.bar nav{margin-left:auto;display:flex;gap:18px}
+.bar a{
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12.5px;color:var(--ink-3);text-decoration:none;border-bottom:1px solid transparent
+}
+.bar a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+main{padding:0 0 96px}
+.col{max-width:700px}
+h1{
+  font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:700;font-size:clamp(30px,5.4vw,46px);line-height:1.08;
+  letter-spacing:-.022em;margin:54px 0 20px;max-width:640px
+}
+h2{
+  font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:600;font-size:22px;line-height:1.24;letter-spacing:-.012em;
+  margin:52px 0 14px;max-width:700px
+}
+h3{font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:600;
+  font-size:18.5px;letter-spacing:-.008em;margin:40px 0 8px}
+p.meta{font-size:14.5px;color:var(--ink-3);margin:-2px 0 16px}
+p.meta a{border-bottom-color:transparent}
+p.meta a:hover{border-bottom-color:currentColor}
+p{margin:0 0 18px;max-width:700px}
+p strong{font-weight:600}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(28,92,171,.32)}
+a:hover{border-bottom-color:currentColor}
+hr{border:0;border-top:1px solid var(--rule);margin:46px 0}
+ul,ol{margin:0 0 18px;padding-left:22px;max-width:700px}
+li{margin:0 0 8px}
+li>p{margin:0 0 8px}
+code{
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.86em;background:var(--raised);padding:.12em .34em;border-radius:3px
+}
+pre{
+  background:var(--raised);border:1px solid var(--rule);border-radius:5px;
+  padding:15px 17px;overflow-x:auto;margin:0 0 22px;max-width:820px
+}
+pre code{background:none;padding:0;font-size:13px;line-height:1.55}
+em{color:var(--ink-2)}
+.tw{overflow-x:auto;margin:0 0 26px;max-width:980px}
+table{border-collapse:collapse;font-size:14.5px;min-width:100%}
+th,td{padding:7px 15px 7px 0;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  font-size:11.5px;text-transform:uppercase;letter-spacing:.055em;
+  color:var(--ink-3);font-weight:500;border-bottom-color:var(--ink-3);white-space:normal
+}
+td.num{text-align:right;font-variant-numeric:tabular-nums;padding-right:22px}
+th.num{text-align:right;padding-right:22px}
+tbody tr:last-child td{border-bottom:0}
+figure{margin:30px 0 34px;max-width:980px}
+figure img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:4px}
+.foot{border-top:1px solid var(--rule);padding:22px 0 40px}
+.foot .wrap{
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:8px 20px
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  h1{margin-top:36px}
+  th,td{padding-right:14px}
+}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap"><span class="slug">spurs-rodeo-trip</span><nav><a href="docs/method.html">method</a><a href="https://github.com/jmsmarrelli/spurs-rodeo-trip">repository</a><a href="https://jmsmarrelli.github.io/basketball-analytics/">all projects</a></nav></div></header>
+<main><div class="wrap">
+<h1>The Rodeo Road Trip</h1>
+<p>Every February the stock show and rodeo takes over the arena in San Antonio and
+the Spurs leave town for two and a half weeks. It has happened every season
+since 2003. The Clippers and Lakers have their own version around the Grammys;
+San Antonio's is a game longer on average than anyone else's and has run without
+interruption for twenty years. It also comes with a piece of folklore attached:
+that the Spurs are <em>better</em> on it.</p>
+<p>Twenty seasons of schedules and box scores, 23,838 games, 2003-04 to 2022-23.</p>
+<p><strong>They win more on it. They do not play better on it. Both of those are true,
+and the gap between them is the schedule.</strong></p>
+<hr>
+<h2>Finding the trip</h2>
+<p>Nothing in the schedule data says "rodeo road trip". So it is not looked up, it
+is detected: for each team and season, the longest unbroken run of road games
+whose <strong>first</strong> game falls between 20 January and 20 March, discarded if it is
+shorter than four games.</p>
+<p>For every other franchise it returns whatever the schedule maker happened to
+hand them. For San Antonio it returns the rodeo, twenty times out of twenty.</p>
+<figure><img loading="lazy" alt="Calendar" src="figures/01_calendar.png"></figure>
+<p><strong>Twenty trips, averaging 8.0 games over 18.8 days and 5,973 miles.</strong> The
+longest were nine games. The odd one out is 2020-21, five games in March, from
+the compressed season the pandemic rearranged — which the detector found without
+being told anything about it.</p>
+<p>Three of the twenty were checked against contemporaneous reporting rather than
+against the data that produced them: the 2016-17 start date and the 2018-19 end
+date match exactly, and eight of the nine opponents the detector found for
+2022-23 are the eight a season-preview piece listed. It is the right event.</p>
+<p>And it really is unique:</p>
+<figure><img loading="lazy" alt="League trips" src="figures/02_league_trips.png"></figure>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Team</th>
+<th>Average longest February trip</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>San Antonio</strong></td>
+<td><strong>8.00 games</strong></td>
+</tr>
+<tr>
+<td>LA Clippers</td>
+<td class="num">6.94</td>
+</tr>
+<tr>
+<td>Brooklyn</td>
+<td class="num">6.45</td>
+</tr>
+<tr>
+<td>Chicago</td>
+<td class="num">6.29</td>
+</tr>
+<tr>
+<td>LA Lakers</td>
+<td class="num">6.28</td>
+</tr>
+<tr>
+<td>...</td>
+<td></td>
+</tr>
+<tr>
+<td>Washington</td>
+<td class="num">4.25</td>
+</tr>
+<tr>
+<td>Oklahoma City <em>(4 seasons)</em></td>
+<td class="num">4.25</td>
+</tr>
+<tr>
+<td>Indiana</td>
+<td class="num">4.19</td>
+</tr>
+</tbody>
+</table></div>
+<p>A full game longer, on average, than any other franchise. Not in every single
+season — the Clippers had an eleven-game trip in 2010-11, and somebody edges San
+Antonio in six of the twenty — but no other franchise gets one this long this
+reliably, and none of the others is the same event twice.</p>
+<p>Widen the detection window to the whole of January through mid-April and San
+Antonio's number does not move: 8.00 games, twenty seasons. The rodeo trip is
+not just their longest February road trip, it is their longest road trip of the
+second half of the season, every year.</p>
+<hr>
+<h2>Does a long trip cost anything?</h2>
+<p>The first question is whether the trip is a burden at all beyond the ordinary
+road games inside it. Put an indicator for "the away team is on its long
+February trip" into a model that already has team-season fixed effects,
+season-by-season home advantage, and controls for rest, back-to-backs, density,
+travel, time zones and altitude:</p>
+<figure><img loading="lazy" alt="Trip effect" src="figures/03_trip_effect.png"></figure>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Points per 100</th>
+<th>Std. error</th>
+<th>t</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>On a long road trip</td>
+<td class="num">+0.16</td>
+<td class="num">0.30</td>
+<td class="num">0.5</td>
+</tr>
+<tr>
+<td>First games back after one</td>
+<td class="num">−0.13</td>
+<td class="num">0.28</td>
+<td class="num">−0.5</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nothing, in either direction. A long trip is not a special burden. It is eight
+road games, and the model has already priced eight road games — the rest, the
+miles, the time zones and the density are in there individually, and once they
+are, the fact that they came in a row adds nothing measurable.</p>
+<p>That is a useful null, and it is worth reading next to the terms around it. The
+same fit puts a back-to-back at −1.52 and a night in Denver or Salt Lake City at
+−2.13, both comfortably away from zero. The instrument finds things. The trip is
+not one of them.</p>
+<p>The much-discussed hangover in the first games back is not there either, but
+that one is a much softer null and the README should not pretend otherwise.
+"First games back" has to be defined, and the estimate follows the definition:
+three games gives −0.55, five games −0.19, and matching the length of the trip
+itself −0.13. Across the nine specifications in <code>output/sensitivity.csv</code> it runs
+from −0.55 to +0.54. None of them is significant and the spread is wider than
+any of the estimates, which is the honest reading: twenty trips cannot resolve a
+hangover of half a point per 100 from nothing.</p>
+<hr>
+<h2>So why do they win on it?</h2>
+<p>They do win on it. Over 160 rodeo-trip games:</p>
+<figure><img loading="lazy" alt="Anatomy" src="figures/05_anatomy.png"></figure>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Games</th>
+<th>Win rate</th>
+<th>Actual net</th>
+<th>Expected net</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>On the rodeo trip</strong></td>
+<td class="num">160</td>
+<td class="num"><strong>58.1%</strong></td>
+<td class="num">+1.74</td>
+<td class="num">+2.46</td>
+</tr>
+<tr>
+<td>Other road games</td>
+<td class="num">636</td>
+<td class="num">53.6%</td>
+<td class="num">+1.76</td>
+<td class="num">+1.84</td>
+</tr>
+<tr>
+<td>Home games</td>
+<td class="num">794</td>
+<td class="num">73.8%</td>
+<td class="num">+7.82</td>
+<td class="num">+7.60</td>
+</tr>
+</tbody>
+</table></div>
+<p>Four and a half percentage points better on the trip than on their other road
+games. That is the folklore, and it is in the data.</p>
+<p>Two things sit underneath it, and neither is the story anyone tells.</p>
+<p><strong>They did not outplay anyone.</strong> Their point differential on the trip is +1.74
+per 100. On the rest of their road schedule it is +1.76. The same, to within a
+rounding error, across 160 games and 636. The extra wins are not extra
+production; they are the same production landing on the right side of more close
+results. In games decided by five points or fewer they went 58.5% on the trip
+and 47.2% on other road nights — an eleven-point swing on a sample of 41 games,
+which is what a coin looks like when you only flip it forty times.</p>
+<p><strong>The trip is a softer slate.</strong> The model's expectation for a Spurs trip game is
++2.46 points per 100; for their other road games it is +1.84. Roughly a third of
+that 0.6 is the opponents: a two-week block has to be assembled out of whoever
+happens to be at home, and it disproportionately reaches the eastern conference
+— 50% of their trip opponents against 33% of their other road opponents. The
+rest is the schedule terms, mostly the model's small positive coefficient on how
+deep into a road trip a team is, which the sibling schedule project fits too and
+explicitly does not believe. Strip that term out and the slate advantage halves
+to 0.33 and the conclusion below does not move.</p>
+<p>Put the two together and San Antonio was <strong>0.71 points per 100 worse than
+expected on the trip</strong>, with a 95% interval running from −2.65 to +1.31 and
+p = 0.48. Not measurably different from ordinary, and if anything pointed the
+wrong way.</p>
+<figure><img loading="lazy" alt="By season" src="figures/04_by_season.png"></figure>
+<hr>
+<h2>Why this is a small project with a specific point</h2>
+<p>The interesting thing here is not the answer, which is a null. It is that a
+twenty-year piece of institutional folklore, repeated by broadcasters every
+February, rests entirely on a comparison nobody adjusted — and that when you do
+adjust it, the correction has two independent pieces, one about who they played
+and one about how close the games were, and neither has anything to do with what
+the story claims.</p>
+<p>The win rate is real. The inference from it is not. And the corrections take
+things any model of team performance already has to have for other reasons.</p>
+<p>That pattern is most of what a schedule analysis is for.</p>
+<hr>
+<h2>How the model works</h2>
+<p>One row per game, from the home team's side. The outcome is home net rating,
+points per 100 possessions minus points allowed per 100.</p>
+<pre><code>net_home  =  strength(home team, that season)
+           − strength(away team, that season)
+           + home advantage for that season
+           + rest, travel, density, time zones, altitude
+           + the trip indicators
+           + error
+</code></pre>
+<p>R² 0.229, residual standard deviation 12.3 points per 100 across 23,838 games.
+The schedule controls come out where an independent fit of the same model puts
+them — a back-to-back at −1.52, playing at altitude at −2.13, each additional
+game in the trailing week at −0.37 — which is the cross-check that the trip term
+is being read off a model that works.</p>
+<p>Team-season fixed effects mean a schedule coefficient is identified from
+variation inside a single roster's own season. The 2019-20 restart is excluded
+rather than averaged in: twenty-two teams in one Florida complex with no travel
+is neither a road trip nor a home stand.</p>
+<p>"Expected", everywhere above, deliberately leaves the two trip indicators out of
+the fitted value. Including them would make the comparison circular — the
+residual would already have the league-wide trip effect removed, and "San
+Antonio against expectation" would quietly become "San Antonio against other
+teams on trips".</p>
+<p><code>output/sensitivity.csv</code> refits the whole thing under seven definitions of the
+trip. The window, the minimum length and the control set all move the estimates
+by less than their standard errors. <code>docs/method.md</code> has that table and the
+detection rule in full.</p>
+<hr>
+<h2>What this does not do</h2>
+<ul>
+<li><strong>No injury or rest data.</strong> If the Spurs used the trip to rest players — which
+  they were famous for — that is inside the estimate, not controlled for. The
+  null is "no effect after everything the schedule can see", and roster
+  decisions are not something the schedule can see.</li>
+<li><strong>The All-Star break is inside seventeen of the twenty trips</strong> and the model
+  has no term for it. A trip interrupted by five days off is not quite the same
+  object as one that is not.</li>
+<li><strong>Twenty trips is twenty observations.</strong> The estimates use 160 games, but
+  games inside one trip are not independent of each other.</li>
+<li><strong>Possessions are estimated</strong> from the box score with the usual
+  FGA + 0.44×FTA − OREB + TOV. Fine over a whole game, not fine over a quarter.</li>
+<li><strong>2022-23 is the last season</strong>, which is where the public mirror this reads
+  currently ends.</li>
+<li><strong>Regular season only.</strong></li>
+</ul>
+<hr>
+<h2>Running it</h2>
+<pre><code class="language-bash">pip install -r requirements.txt
+python src/run_01_build.py   # schedules + box scores -&gt; the team-game panel
+python src/run_02_trips.py   # detect the trips, price them, figures 01-05
+</code></pre>
+<p>Or <code>make all</code>. Under a minute.</p>
+<pre><code>src/
+  config.py      paths, seasons, the detection window
+  venues.py      every city the league played in, with elevation and time zone
+  model.py       the design matrix and the estimator
+  trips.py       finding the trip, labelling the games, the bootstrap
+  labels.py      collision-resolving point labels
+  style.py       one place that decides what every figure looks like
+  run_0*.py      the pipeline, in order
+output/          every number quoted above, as CSV
+figures/         five figures, regenerated from scratch by the pipeline
+docs/method.md   longer notes, including the detection rule in full
+</code></pre>
+<h2>Data</h2>
+<p>Schedules and team box scores from
+<a href="https://github.com/sportsdataverse/hoopR-data">sportsdataverse/hoopR-data</a>,
+a mirror of ESPN's public feeds. <code>data/README.md</code> has the fetch step.</p>
+<h2>License</h2>
+<p>MIT. See <code>LICENSE</code>.</p>
+</div></main>
+<footer class="foot"><div class="wrap"><span>spurs-rodeo-trip</span><span>figures and tables regenerated by the pipeline in this repository</span></div></footer>
+</body>
+</html>

@@ -1,0 +1,11 @@
+term,beta,se,label,t,lo,hi
+d_rest0,-1.5212,0.3479,No rest (back-to-back),-4.3727,-2.2031,-0.8394
+d_rest1,0.2178,0.3199,One day off,0.6809,-0.4092,0.8449
+d_rest2,0.146,0.3298,Two days off,0.4428,-0.5003,0.7924
+d_miles,0.3111,0.1954,"Travel, per 1,000 miles",1.5922,-0.0719,0.6941
+d_tz,-0.3198,0.1453,Time zones crossed,-2.2008,-0.6046,-0.035
+d_games7,-0.3739,0.121,Games in the past week,-3.0897,-0.6111,-0.1367
+d_alt,-2.1302,0.4865,Playing at altitude,-4.3791,-3.0837,-1.1768
+d_road,0.0993,0.0692,Nth straight road game,1.436,-0.0362,0.2349
+d_trip,0.1557,0.2957,On a long road trip,0.5265,-0.4239,0.7353
+d_after,-0.1321,0.2834,First games back after one,-0.4659,-0.6876,0.4235
