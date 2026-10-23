@@ -9,7 +9,7 @@ with no travel at all.
 
 So location comes from the schedule's venue city, not from the franchise, and
 this table covers every city the league visited in twenty regular seasons.
-Coordinates are city centers, which is accurate to a couple of miles on flights
+Coordinates are city centres, which is accurate to a couple of miles on flights
 measured in hundreds. Elevation is in feet. The UTC offset is the standard-time
 one; it is used only to count time zones crossed, so daylight saving does not
 enter.
