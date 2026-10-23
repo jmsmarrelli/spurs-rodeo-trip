@@ -32,7 +32,7 @@ def game_frame(panel: pd.DataFrame) -> pd.DataFrame:
     """Fold the team-game panel to one row per game, with differenced controls."""
     burden = M.own_burden(panel)
     keep = ["game_id", "season", "team", "is_home", "net", "poss", "city",
-            "on_trip", "after_trip"]
+            "on_trip", "after_trip", "margin_h"]
     p = pd.concat([panel[keep].reset_index(drop=True),
                    burden.reset_index(drop=True)], axis=1)
     home = p[p["is_home"] == 1].set_index("game_id")
@@ -41,7 +41,7 @@ def game_frame(panel: pd.DataFrame) -> pd.DataFrame:
     home, away = home.loc[common], away.loc[common]
 
     g = pd.DataFrame({"season": home["season"], "net_h": home["net"],
-                      "margin_h": home["net"] * home["poss"] / 100.0,
+                      "margin_h": home["margin_h"],
                       "home": home["team"], "away": away["team"]})
     for term, col in M.OWN.items():
         g[term] = home[col].to_numpy() - away[col].to_numpy()
@@ -144,13 +144,10 @@ def fig_effect(coef: pd.DataFrame) -> None:
     ax.grid(axis="y", visible=False)
     S.strip(ax, keep=("bottom",))
     ax.tick_params(axis="y", labelsize=9.2)
-    ax.set_xlabel("Effect on net rating, points per 100 possessions")
-    ax.set_title("The two terms this project is about are the two that are zero",
+    ax.set_xlabel("Association with net rating, points per 100 estimated possessions")
+    ax.set_title("Trip associations and their uncertainty",
                  loc="left")
-    S.caption(fig, "All ten schedule terms from one fit, with team-season fixed effects and "
-                   "season-by-season home advantage also in the model. Bars are 95% intervals. "
-                   "The black terms are the trip; the grey ones are the controls that had to be "
-                   "there first, and four of them are comfortably non-zero.")
+    S.caption(fig, 'Schedule coefficients with team-season effects and season-specific home advantage. Bars are 95% intervals. Intervals that include zero do not establish equivalence or an absence of a trip effect; observational confounding can remain.')
     fig.tight_layout()
     fig.savefig(FIG / "03_trip_effect.png")
     plt.close(fig)
@@ -290,17 +287,12 @@ def fig_anatomy(rates: pd.DataFrame, close: pd.DataFrame) -> None:
     ax2.set_xticks(x, labels)
     ax2.set_ylim(0, max(exp.max(), act.max()) * 1.32)
     ax2.set_ylabel("Net rating, points per 100")
-    ax2.set_title("They did not play better", loc="left", fontsize=11)
+    ax2.set_title("Performance relative to expectation", loc="left", fontsize=11)
     S.strip(ax2)
     ax2.grid(axis="x", visible=False)
     ax2.legend(frameon=False, fontsize=9, loc="upper right")
 
-    S.caption(fig, "Expected is what the model gives a team facing that opponent, in that "
-                   "building, arriving that way, with no term for the trip itself. San Antonio's "
-                   "actual point differential is the same on the trip as on the rest of its road "
-                   "schedule; the extra wins are in the close games, and the softer slate is "
-                   "visible before tip-off. 160 trip games against 636 other road games, of "
-                   "which 41 and 178 were decided by five or fewer.")
+    S.caption(fig, 'Historical trip games and other San Antonio road games. Expected performance comes from the fitted model, not a prediction frozen before each game. Close games use original final score margins of five points or fewer; the exact counts and win rates are in output/close_games.csv.')
     fig.tight_layout()
     fig.savefig(FIG / "05_anatomy.png")
     plt.close(fig)

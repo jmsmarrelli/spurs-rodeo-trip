@@ -42,8 +42,7 @@ def load_raw() -> tuple[pd.DataFrame, pd.DataFrame]:
     for s in SEASONS:
         sp, bp = RAW / f"nba_schedule_{s}.csv", RAW / f"team_box_{s}.csv.gz"
         if not (sp.exists() and bp.exists()):
-            print(f"  missing raw files for {s}, skipping", file=sys.stderr)
-            continue
+            raise FileNotFoundError(f"Missing required raw inputs for {s}")
         sched.append(pd.read_csv(sp, low_memory=False, usecols=SCHED_COLS))
         box.append(pd.read_csv(bp, low_memory=False, usecols=BOX_COLS,
                                compression="gzip"))
@@ -95,7 +94,7 @@ def team_panel(g: pd.DataFrame) -> pd.DataFrame:
     home = g.assign(team=g["home_abbreviation"], opp=g["away_abbreviation"], is_home=1)
     away = g.assign(team=g["away_abbreviation"], opp=g["home_abbreviation"], is_home=0)
     cols = ["game_id", "season", "date", "city", "team", "opp", "is_home",
-            "neutral_site", "poss", "net_h"]
+            "neutral_site", "poss", "net_h", "margin_h"]
     panel = pd.concat([home[cols], away[cols]], ignore_index=True)
     panel["net"] = np.where(panel["is_home"] == 1, panel["net_h"], -panel["net_h"])
     return panel.sort_values(["season", "team", "date"]).reset_index(drop=True)
